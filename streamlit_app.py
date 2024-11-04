@@ -16,7 +16,7 @@ llm = OpenAI(openai_api_key=my_secret_key)
 # Define templates for different response types
 trip_template = """
 You are an expert in analyzing travel experiences.
-From the following text, determine whether the trip experience was "positive" or "negative".
+From the following text, determine whether the trip experience was "positive" or "negative". 
 
 Text:
 {trip_experience}
@@ -75,8 +75,8 @@ Trip Experience: {trip_experience}
 # Routing/Branching chain
 branch = RunnableBranch(
 
-    (lambda x: "negative" in x["trip_experience"].lower(), airline_issue_prompt),
-    (lambda x: "negative" in x["trip_experience"].lower(), external_issue_prompt),
+    (lambda x: "negative" in x.lower(), airline_issue_prompt),
+    (lambda x: "negative" in x.lower(), external_issue_prompt),
     positive_feedback_prompt
 )
 
