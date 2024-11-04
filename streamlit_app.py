@@ -92,5 +92,5 @@ trip_experience = st.text_area("Please describe your trip:")
 
 if trip_experience:
     # Run the full chain to get a categorized response
-    result = full_chain.invoke({"request": trip_experience})
+    result = full_chain.invoke({"request": text})
     st.write(result)
