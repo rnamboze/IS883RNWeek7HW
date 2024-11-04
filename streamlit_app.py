@@ -13,7 +13,7 @@ my_secret_key = st.secrets['MyOpenAIKey']
 ### Create the LLM API object
 llm = OpenAI(openai_api_key=my_secret_key)
 
-# Define templates for different response types
+# Create template to determine if experience was positive or negative
 trip_template = """
 You are an expert in analyzing travel experiences.
 From the following text, determine whether the trip experience was "positive" or "negative". 
