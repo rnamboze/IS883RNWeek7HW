@@ -19,7 +19,7 @@ You are an expert in analyzing travel experiences.
 From the following text, determine whether the trip experience was "positive" or "negative". 
 
 Text:
-{trip_experience}
+{request}
 """
 
 # Create the decision-making chain
@@ -81,7 +81,7 @@ branch = RunnableBranch(
 )
 
 # Put all the chains together
-full_chain = {"trip_experience": trip_experience_chain, "text": lambda x: x["request"]} | branch
+full_chain = {"trip_experience": trip_experience_chain, "trip_experience": lambda x: x["request"]} | branch
 
 # Display Side
 st.title("Flight Experience Feedback Form")
@@ -92,5 +92,5 @@ trip_experience = st.text_area("Please describe your trip:")
 
 if trip_experience:
     # Run the full chain to get a categorized response
-    result = full_chain.invoke({"request": text})
+    result = full_chain.invoke({"request": trip_experience})
     st.write(result)
