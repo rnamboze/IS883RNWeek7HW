@@ -32,28 +32,28 @@ trip_experience_chain = (
 # individual response templates for each scenario
 airline_issue_prompt = PromptTemplate.from_template(
     """You are a customer service representative for an airline.
-    The customer had a negative experience with the airline due to an issue caused by the airline (e.g., lost luggage).
+    From the following text, determine if the customer had a negative experience due to an issue caused by the airline (e.g., lost luggage).
 
     Your response should follow these guidelines:
     1. Express sympathy and acknowledge the inconvenience.
     2. Inform the customer that the customer service team will contact them soon to provide compensation.
     3. Address the customer directly in a professional tone.
 
-Trip Experience: {trip_experience}
+Text: {trip_experience}
 
 """    
 ) | llm
 
 external_issue_prompt = PromptTemplate.from_template(
     """You are a customer service representative for an airline.
-    The customer had a negative experience due to external factors beyond the airline's control (e.g., weather-related delays).
+    From the following text, determine if the customer had a negative experience due to external factors beyond the airline's control (e.g., weather-related delays).
 
     Your response should follow these guidelines:
     1. Express sympathy for the inconvenience caused by external circumstances.
     2. Explain that the airline is not liable in such cases and will not provide compensation.
     3. Address the customer directly in a professional tone.
 
-Trip Experience: {trip_experience}
+Text: {trip_experience}
 
 """
 ) | llm
@@ -61,14 +61,14 @@ Trip Experience: {trip_experience}
 
 positive_feedback_prompt = PromptTemplate.from_template(
     """You are a customer service representative for an airline.
-    The customer had a positive experience, and you would like to acknowledge their feedback.
+    From the following text, determine if the customer had a positive experience, and you would like to acknowledge their feedback.
 
     Your response should follow these guidelines:
     1. Thank the customer for their feedback and for choosing to fly with the airline.
     2. Convey appreciation and a professional, positive tone.
     3. Address the customer directly.
 
-Trip Experience: {trip_experience}
+Text: {trip_experience}
 """ 
 ) | llm
 
@@ -81,7 +81,7 @@ branch = RunnableBranch(
 )
 
 # Put all the chains together
-full_chain = {"trip_experience": trip_experience_chain, "trip_experience": lambda x: x["request"]} | branch
+full_chain = {"trip_experience": trip_experience_chain, "text": lambda x: x["request"]} | branch
 
 # Display Side
 st.title("Flight Experience Feedback Form")
